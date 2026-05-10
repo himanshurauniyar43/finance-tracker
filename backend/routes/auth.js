@@ -12,12 +12,38 @@ const { authLimiter } = require('../middleware/rateLimiter');
  *   post:
  *     tags: [Authentication]
  *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: password123
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *       400:
+ *         description: Validation error
  */
 router.post('/register', authLimiter, registerValidation, validate, async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
-    // Check if user exists (MySQL uses ? instead of $1)
     const [userExists] = await pool.query(
       'SELECT id FROM users WHERE email = ? OR username = ?',
       [email, username]
@@ -30,17 +56,14 @@ router.post('/register', authLimiter, registerValidation, validate, async (req, 
       });
     }
 
-    // Hash password
     const salt = await bcrypt.genSalt(12);
     const password_hash = await bcrypt.hash(password, salt);
 
-    // Create user with default role 'user'
     const [result] = await pool.query(
       'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
       [username, email, password_hash]
     );
 
-    // Get the newly created user
     const [users] = await pool.query(
       'SELECT id, username, email, role, created_at FROM users WHERE id = ?',
       [result.insertId]
@@ -48,7 +71,6 @@ router.post('/register', authLimiter, registerValidation, validate, async (req, 
 
     const user = users[0];
 
-    // Generate JWT
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
@@ -78,12 +100,34 @@ router.post('/register', authLimiter, registerValidation, validate, async (req, 
  *   post:
  *     tags: [Authentication]
  *     summary: Login user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: admin@test.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: admin123
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       401:
+ *         description: Invalid credentials
  */
 router.post('/login', authLimiter, loginValidation, validate, async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Find user (MySQL version)
     const [users] = await pool.query(
       'SELECT id, username, email, password_hash, role FROM users WHERE email = ?',
       [email]
@@ -98,7 +142,6 @@ router.post('/login', authLimiter, loginValidation, validate, async (req, res, n
 
     const user = users[0];
 
-    // Check password
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
     if (!isValidPassword) {
       return res.status(401).json({
@@ -107,7 +150,6 @@ router.post('/login', authLimiter, loginValidation, validate, async (req, res, n
       });
     }
 
-    // Generate JWT
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,

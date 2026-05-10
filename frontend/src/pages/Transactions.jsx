@@ -119,7 +119,7 @@ const Transactions = () => {
             <label className="block text-sm font-medium mb-1 dark:text-gray-200">Category</label>
             <select name="category_id" value={formData.category_id} onChange={handleInputChange} required className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
               <option value="">Select category</option>
-              {filteredCategories.map(c => <option key={c.id} value={c.id}>{c.icon} {c.name}</option>)}
+              {filteredCategories.map(c => <option key={c.id} value={c.id}> {c.name}</option>)}
             </select>
           </div>
           <div>
@@ -171,7 +171,7 @@ const Transactions = () => {
                 transactions.map(t => (
                   <tr key={t.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                     <td className="px-4 py-3 text-sm dark:text-gray-300 whitespace-nowrap">{new Date(t.transaction_date).toLocaleDateString('en-IN')}</td>
-                    <td className="px-4 py-3 text-sm dark:text-gray-300 whitespace-nowrap">{t.category_icon} {t.category_name}</td>
+                    <td className="px-4 py-3 text-sm dark:text-gray-300 whitespace-nowrap"> {t.category_name}</td>
                     <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{t.description || '-'}</td>
                     <td className={`px-4 py-3 text-sm text-right font-semibold whitespace-nowrap ${t.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                       {t.type === 'income' ? '+' : '-'}₹{parseFloat(t.amount).toLocaleString('en-IN')}

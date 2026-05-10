@@ -15,6 +15,7 @@ const Layout = () => {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '📊', roles: ['admin', 'user', 'read-only'] },
     { path: '/transactions', label: 'Transactions', icon: '💳', roles: ['admin', 'user', 'read-only'] },
+    { path: '/users', label: 'Users', icon: '👥', roles: ['admin'] },
   ];
 
   return (

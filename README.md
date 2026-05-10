@@ -1,7 +1,13 @@
-A full-stack personal finance management application with role-based access control, real-time analytics dashboard, and Redis caching.
-
----
-
+<div align="center">
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis-FF4438?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+  <br/>
+  <h1>💰 Personal Finance Tracker</h1>
+  <p><strong>Full-stack finance management with RBAC, real-time analytics, and Redis caching</strong></p>
+</div>
 ## 🚀 Tech Stack
 
 | Layer | Technology |
@@ -27,7 +33,7 @@ A full-stack personal finance management application with role-based access cont
 
 ### 💳 Transaction Management
 - Add, edit, and delete income/expense transactions
-- 12 pre-defined categories (Food & Dining, Transport, Shopping, etc.)
+- 9 pre-defined categories (Food & Dining, Transport, Shopping, etc.)
 - Search by description
 - Filter by type (income/expense) and category
 - Pagination (50 items per page)
@@ -56,57 +62,6 @@ A full-stack personal finance management application with role-based access cont
 - Responsive sidebar navigation
 - Loading spinners and error states
 - Role-based conditional rendering
-
-### 🔒 Security
-- XSS protection via Helmet middleware
-- SQL injection prevention via parameterized queries
-- Token-based API authentication on all routes
-- Protected frontend routes
-
----
-
-## 📦 Project Structure
-personal-finance-tracker/
-├── backend/
-│ ├── config/
-│ │ ├── database.js # MySQL connection pool
-│ │ ├── redis.js # Redis connection
-│ │ └── swagger.js # Swagger configuration
-│ ├── middleware/
-│ │ ├── auth.js # JWT verification
-│ │ ├── rbac.js # Role-based access control
-│ │ └── rateLimiter.js # Rate limiting (3 levels)
-│ ├── routes/
-│ │ ├── auth.js # Login & Register
-│ │ ├── transactions.js # CRUD operations
-│ │ ├── analytics.js # Dashboard data
-│ │ ├── users.js # Admin user management
-│ │ └── categories.js # Transaction categories
-│ ├── utils/
-│ │ └── validation.js # Input validation
-│ ├── server.js # Main entry point
-│ └── .env # Environment variables
-├── frontend/
-│ └── src/
-│ ├── components/
-│ │ └── Layout.jsx # Sidebar + Main layout
-│ ├── contexts/
-│ │ ├── AuthContext.jsx # Authentication state
-│ │ └── ThemeContext.jsx # Dark/Light mode
-│ ├── pages/
-│ │ ├── Login.jsx # User login
-│ │ ├── Register.jsx # User registration
-│ │ ├── Dashboard.jsx # Analytics & charts
-│ │ ├── Transactions.jsx # Transaction management
-│ │ └── Users.jsx # Admin user list
-│ ├── services/
-│ │ └── api.js # Axios API calls
-│ ├── App.jsx # Routes with lazy loading
-│ └── main.jsx # Entry point
-└── README.md
-
-text
-
 ---
 
 ## 🔧 Setup Instructions
@@ -116,11 +71,14 @@ text
 - **MySQL** 8+ installed and running
 - **Redis** (or Memurai for Windows)
 
-### 1. Clone the Repository
+### 
 ```bash
+[1]. Clone the Repository
 git clone <repository-url>
 cd personal-finance-tracker
-2. Database Setup
+
+
+[2]. Database Setup
 sql
 -- Connect to MySQL
 mysql -u root -p
@@ -131,7 +89,9 @@ USE finance_tracker;
 
 -- Run the schema (create tables and seed categories)
 -- See backend/database/schema.sql or run manually
-3. Backend Setup
+
+
+[3]. Backend Setup
 bash
 cd backend
 npm install
@@ -149,22 +109,27 @@ npm install
 npm run dev
 Server runs on: http://localhost:5000
 
-4. Frontend Setup
+
+[4]. Frontend Setup
 bash
 cd frontend
 npm install
 npm run dev
 App runs on: http://localhost:3000
 
-5. Seed Demo Users
+
+[5]. Seed Demo Users
 bash
 cd backend
 node seed.js
+
 🔑 Demo Credentials
-Role	Email	Password	Permissions
-Admin	admin@test.com	admin123	Full access, manage users
-User	user@test.com	user123	Manage own transactions
-Read-only	viewer@test.com	viewer123	View transactions only
+Role	      Email	            Password  	Permissions
+Admin	      admin@test.com	  admin123	  Full access, manage users
+User	      user@test.com	    user123	    Manage own transactions
+Read-only	  viewer@test.com	  viewer123	  View transactions only
+
+
 📚 API Documentation
 After starting the backend, visit:
 
@@ -172,28 +137,34 @@ http://localhost:5000/api-docs
 
 The Swagger UI provides interactive documentation for all endpoints:
 
-Method	Endpoint	Access
-POST	/api/auth/register	Public
-POST	/api/auth/login	Public
-GET	/api/transactions	All roles
-POST	/api/transactions	Admin, User
-PUT	/api/transactions/:id	Admin, User
-DELETE	/api/transactions/:id	Admin, User
-GET	/api/analytics/monthly	All roles
-GET	/api/analytics/categories	All roles
-GET	/api/analytics/trends	All roles
-GET	/api/users	Admin only
-GET	/api/categories	All roles
+Method	  Endpoint	              Access
+POST	  /api/auth/register	    Public
+POST	  /api/auth/login	        Public
+GET	      /api/transactions	      All roles
+POST   /api/transactions	        Admin, User
+PUT	      /api/transactions/:id	  Admin, User
+DELETE	  /api/transactions/:id	  Admin, User
+GET	      /api/analytics/monthly	All roles
+GET	      /api/analytics/categories	All roles
+GET	      /api/analytics/trends	  All roles
+GET	      /api/users	            Admin only
+GET	     /api/categories	        All roles
+
+
 🧪 React Hooks Implementation
 Hook	Usage	Location
 useContext	Auth state, theme management	AuthContext.jsx, ThemeContext.jsx
 useCallback	Event handlers, row renderers	Transactions.jsx, Dashboard.jsx
 useMemo	Filtered lists, summary calculations	Transactions.jsx, Dashboard.jsx
+
+
 🚦 Rate Limiting Configuration
 Endpoint	Limit	Window
 Auth (/api/auth/*)	5 requests	15 minutes
 Transactions (/api/transactions/*)	100 requests	1 hour
 Analytics (/api/analytics/*)	50 requests	1 hour
+
+
 💾 Redis Caching Strategy
 Data	TTL	Invalidation Trigger
 Analytics (monthly, categories, trends)	15 minutes	New/updated/deleted transaction
@@ -205,39 +176,45 @@ After caching: Subsequent loads = 0 database queries (served from Redis)
 
 Measured improvement: ~40-60% faster response times
 
+
 🎯 Assignment Checklist
-User authentication with JWT
 
-Role-Based Access Control (3 roles)
+✅ User authentication with JWT
 
-Transaction CRUD operations
+✅ Role-Based Access Control (3 roles)
 
-Search and filter transactions
+✅ Transaction CRUD operations
 
-Dashboard with 3 chart types (Pie, Bar, Line)
+✅ Search and filter transactions
 
-Lazy loading with React.lazy() and Suspense
+✅ Dashboard with 3 chart types (Pie, Bar, Line)
 
-Pagination for transaction lists
+✅ Lazy loading with React.lazy() and Suspense
 
-Redis caching with invalidation
+✅ Pagination for transaction lists
 
-Rate limiting on API endpoints
+✅ Redis caching with invalidation
 
-XSS and SQL injection prevention
+✅ Rate limiting on API endpoints
 
-Swagger API documentation
+✅ XSS and SQL injection prevention
 
-useMemo, useCallback, useContext hooks
+✅ Swagger API documentation
 
-Dark/Light theme toggle
+✅ useMemo, useCallback, useContext hooks
 
-Admin user management page
+✅ Dark/Light theme toggle
 
-Virtual scrolling for transaction lists
+✅ Admin user management page
+
+✅ Virtual scrolling for transaction lists
+
+
 
 📄 License
 This project is created as part of an academic assignment.
+
+
 
 👤 Submitted By
 Himanshu Kumar

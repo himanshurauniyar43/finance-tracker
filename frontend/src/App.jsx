@@ -13,6 +13,7 @@ const Transactions = lazy(() => import("./pages/Transactions"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Layout = lazy(() => import("./components/Layout"));
+const Users = lazy(() => import('./pages/Users'));
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -51,6 +52,7 @@ function App() {
                 <Route index element={<Navigate to="/dashboard" />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="transactions" element={<Transactions />} />
+                <Route path="users" element={<Users />} />
               </Route>
             </Routes>
           </Suspense>

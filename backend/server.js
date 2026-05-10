@@ -50,6 +50,18 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    res.setHeader('X-Response-Time', `${duration}ms`);
+    if (res.getHeader('X-Cache')) {
+      res.setHeader('X-Cache', 'HIT');
+    }
+  });
+  next();
+});
+
 // Start server
 const startServer = async () => {
   try {

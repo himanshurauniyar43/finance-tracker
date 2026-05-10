@@ -5,11 +5,11 @@ const ThemeContext = createContext(null);
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : false;
+    return saved === 'true';
   });
 
   useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    localStorage.setItem('darkMode', darkMode);
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -28,6 +28,8 @@ export const ThemeProvider = ({ children }) => {
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (!context) throw new Error('useTheme must be used within ThemeProvider');
+  if (!context) {
+    throw new Error('useTheme must be used within ThemeProvider');
+  }
   return context;
 };
